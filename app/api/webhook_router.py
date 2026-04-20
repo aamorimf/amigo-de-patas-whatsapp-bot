@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, Form, HTTPException, Request
+from fastapi.responses import Response
+from twilio.twiml.messaging_response import MessagingResponse
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -97,3 +99,23 @@ async def test_message(
         }
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
+
+
+@router.post("/webhook/twilio")
+async def handle_twilio_webhook(
+    From: str = Form(...),
+    Body: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    phone_number = From.strip()
+    message_body = Body.strip()
+
+    response_text = process_incoming_message(db, phone_number, message_body)
+
+    twiml = MessagingResponse()
+    twiml.message(response_text)
+
+    return Response(
+        content=str(twiml),
+        media_type="application/xml",
+    )
