@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import declarative_base
-from pydantic import BaseModel
+from app.core.enums import ConversationState
 
 Base = declarative_base()
 
@@ -9,20 +9,19 @@ class Client(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     phone_number = Column(String, unique=True, index=True, nullable=False)
-    current_state = Column(String, nullable=False, default="IDLE")
+    current_state = Column(
+        String,
+        nullable=False,
+        default=ConversationState.INICIO.value
+    )
 
-class IncomingMessage(BaseModel):
-    phone: str
-    text: str
-
-class Appointment(Base):
-    __tablename__ = 'appointments'
+class Quote(Base):
+    __tablename__ = 'quotes'
     
     id = Column(Integer, primary_key=True, index=True)
     client_id = Column(Integer, ForeignKey('clients.id'), nullable=False)
-    tutor_name = Column(String, nullable=True)
-    pet_name = Column(String, nullable=True)
-    service_type = Column(String, nullable=True)
-    preferred_date = Column(String, nullable=True)
-    preferred_time = Column(String, nullable=True)
+    setor = Column(String, nullable=True)
+    produto = Column(String, nullable=True)
+    tamanho = Column(String, nullable=True)
+    quantidade = Column(String, nullable=True)
     status = Column(String, nullable=False, default="DRAFT")

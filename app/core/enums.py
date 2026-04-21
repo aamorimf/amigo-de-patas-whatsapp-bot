@@ -1,15 +1,16 @@
 from enum import Enum
 
 class ConversationState(str, Enum):
-    IDLE = "IDLE"
-    WAITING_TUTOR_NAME = "WAITING_TUTOR_NAME"
-    WAITING_PET_NAME = "WAITING_PET_NAME"
-    WAITING_SERVICE_TYPE = "WAITING_SERVICE_TYPE"
-    WAITING_DATE = "WAITING_DATE"
-    WAITING_TIME = "WAITING_TIME"
-
-class AppointmentStatus(str, Enum):
-    DRAFT = "DRAFT"
-    PENDING_CONFIRMATION = "PENDING_CONFIRMATION"
-    CONFIRMED = "CONFIRMED"
-    CANCELLED = "CANCELLED"
+    # Graphic Print Shop States
+    INICIO = "inicio"
+    ORCAMENTO = "orcamento"
+    COLETA_PRODUTO = "coleta_produto"
+    COLETA_TAMANHO = "coleta_tamanho"
+    COLETA_QUANTIDADE = "coleta_quantidade"
+    CONFIRMACAO = "confirmacao"
+    DUVIDAS = "duvidas"
+    DUVIDA_PRAZO = "duvida_prazo"
+    DUVIDA_MATERIAL = "duvida_material"
+    DUVIDA_ARQUIVO = "duvida_arquivo"
+    ENCAMINHAMENTO = "encaminhamento"
+    FINAL = "final"
